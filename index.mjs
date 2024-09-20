@@ -40,7 +40,7 @@ const server = createServer((req, res) => {
           });
         }
 
-        // PUT Request
+    // PUT Request
     } 
     else if (method === 'PUT' && parsedUrl.pathname.startsWith('/api/items/')) {
         let body = '';
@@ -55,12 +55,16 @@ const server = createServer((req, res) => {
             res.end(JSON.stringify({ message: `PUT request - Updating item ${itemId}`, data: updatedItem }));
         });
 
-    // Handle 404 Not Found
+    // DELETE Request
     } 
-    else {
-        res.statusCode = 404;
-        res.end(JSON.stringify({ message: 'Route not found' }));
-    }
+    else if (method === 'DELETE' && parsedUrl.pathname.startsWith('/api/items/')) {
+        const itemId = parsedUrl.pathname.split('/').pop();
+        res.statusCode = 200;
+        res.end(JSON.stringify({ message: `DELETE request - Deleting item ${itemId}` }));
+
+    
+    } 
+    
 
     // Set server on PORT = 3000
     server.listen(PORT, () => {
